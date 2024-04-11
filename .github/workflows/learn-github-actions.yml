@@ -1,10 +1,23 @@
 name: learn-github-actions
 run-name: ${{ github.actor }} is learning GitHub Actions
-on: [ push  ]
+on:
+  push:
+    branches:
+      - main
+      - develop
+  workflow_call:
+    inputs:
+      username:
+        description: 'A username passed from the caller workflow'
+        default: 'denis-west'
+        required: false
+        type: string
 jobs:
   check-bats-version:
     runs-on: ubuntu-latest
     steps:
+      - name: Print the input name to STDOUT
+        run: echo The username is ${{ inputs.username }}
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
