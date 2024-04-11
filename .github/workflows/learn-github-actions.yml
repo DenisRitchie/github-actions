@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - master
       - develop
   workflow_call:
     inputs:
@@ -16,11 +17,19 @@ jobs:
   check-bats-version:
     runs-on: ubuntu-latest
     steps:
-      - name: Print the input name to STDOUT
-        run: echo The username is ${{ inputs.username }}
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
       - run: npm install -g bats
       - run: bats -v 
+  bash-example:
+    runs-on: ubuntu-latest
+    env:
+      MY_NAME: "Denis West"
+    steps:
+      - name: Print the input name to STDOUT
+        run: echo The username is ${{ inputs.username }}
+      - name: bash-version
+        run: echo "::add-mask::$MY_NAME"
+
